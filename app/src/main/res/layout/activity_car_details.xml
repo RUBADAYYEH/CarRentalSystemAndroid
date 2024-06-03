@@ -9,7 +9,7 @@
     tools:context=".CarDetailsActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/cariv"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
@@ -27,14 +27,14 @@
         android:backgroundTint="@color/dark_purple"
         app:cardCornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView2">
+        app:layout_constraintTop_toBottomOf="@id/cariv">
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/priceInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="200$"
+            android:text=""
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -43,12 +43,12 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/locationInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:text="Ramallah"
+        android:text=""
         android:textSize="20sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintTop_toBottomOf="@+id/locationInput" />
 
     <TextView
         android:id="@+id/brandInput"
@@ -73,7 +73,7 @@
         android:layout_marginStart="10dp"
 
         android:layout_marginTop="5dp"
-        android:text="BMW/2022"
+        android:text=""
         android:textSize="20sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/text"
@@ -139,14 +139,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/colorinput"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@+id/text4"
-        app:layout_constraintEnd_toEndOf="@+id/text2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="420dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bookBtn"

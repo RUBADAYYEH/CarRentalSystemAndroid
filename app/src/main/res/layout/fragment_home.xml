@@ -13,7 +13,12 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -47,6 +52,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="32dp"
                 />
+        </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/linear"
                 android:layout_width="match_parent"
@@ -54,15 +61,16 @@
                 android:orientation="horizontal"
                 android:layout_below="@id/profileImage"
                 android:layout_margin="16dp">
-                <EditText
-                    android:id="@+id/search"
+                <SearchView
+                    android:id="@+id/searchView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="16dp"
                     android:background="@drawable/rounded_edittext"
                     android:elevation="10dp"
-                    android:hint="Search"
+                   android:queryHint="search for brand,model"
                     android:drawableStart="@drawable/baseline_search_24"
+                    android:iconifiedByDefault="false"
                     />
 
 
@@ -84,6 +92,9 @@
                 android:background="@drawable/rounded_edittext">
 
                 <RelativeLayout
+                    android:id="@+id/sevenseatslayout"
+                    android:focusable="true"
+                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:padding="16dp"
                     android:layout_margin="8dp"
@@ -110,6 +121,9 @@
                         />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/fiveseatslayout"
+                    android:focusable="true"
+                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:padding="16dp"
                     android:layout_margin="8dp"
@@ -124,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/fourseatsicon"
-                        android:text="4 Seat"
+                        android:text="5 Seat"
                         android:layout_alignStart="@+id/fourseatsicon"
                         android:layout_alignEnd="@+id/fourseatsicon"
                         android:layout_marginTop="8dp"
@@ -136,6 +150,9 @@
                         />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/twoseatslayout"
+                    android:focusable="true"
+                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:padding="16dp"
                     android:layout_margin="8dp"
@@ -162,6 +179,89 @@
                         />
                 </RelativeLayout>
             </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/filterlayout"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:elevation="10dp"
+                android:background="@drawable/rounded_edittext">
+                <RelativeLayout
+                    android:id="@+id/lowtohigh"
+                    android:layout_width="100dp"
+                   android:clickable="true"
+                    android:layout_height="wrap_content"
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/lowtohigh"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="price"
+                        android:layout_marginStart="30dp"
+                        android:textSize="18dp"
+
+                        />
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:id="@+id/pricehightolow"
+                    android:layout_width="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/hightolow"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="price"
+                        android:layout_marginStart="30dp"
+                        android:textSize="18dp"
+
+                        />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/searchresultTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sarch results:"
+                android:textStyle="bold"
+                android:textSize="24dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                android:layout_marginStart="16dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchcarsRV"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
+                android:layout_below="@id/linear"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/topDealsText"
@@ -189,7 +289,7 @@
 
 
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>
