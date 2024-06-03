@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,9 +23,12 @@ public class MainActivityForUser extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainForUserBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         binding = ActivityMainForUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -62,5 +67,10 @@ public class MainActivityForUser extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_activity_for_user);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+
+    public void ViewCarDetails(View view) {
+
     }
 }

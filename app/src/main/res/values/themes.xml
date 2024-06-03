@@ -6,13 +6,11 @@
     </style>
 
     <style name="Theme.CarRentalSystem" parent="Base.Theme.CarRentalSystem" />
-
     <style name="Theme.CarRentalSystem.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    <style name="Theme.CarRentalSystem.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
+    <style name="Theme.CarRentalSystem.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.CarRentalSystem.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
