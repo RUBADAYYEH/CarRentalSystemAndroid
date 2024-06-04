@@ -12,14 +12,35 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_myreservationsandwishlist"
         android:name="com.example.carrentalsystem.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="My Reservations/Wishlist"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.carrentalsystem.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="Settings"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.carrentalsystem.ui.profile.ProfileFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_callus"
+        android:name="com.example.carrentalsystem.ui.callus.CallUsFragment"
+        android:label="Call Us"
+        tools:layout="@layout/fragment_call_us" />
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.example.carrentalsystem.ui.notifications.NotificationsFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/nav_ourpolicy"
+        android:name="com.example.carrentalsystem.ui.ourpolicy.OurPolicyFragment"
+        android:label="Our Policy"
+        tools:layout="@layout/fragment_our_policy" />
+
 </navigation>
