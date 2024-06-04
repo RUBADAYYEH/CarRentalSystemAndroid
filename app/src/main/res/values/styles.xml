@@ -18,6 +18,24 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">16dp</item>
     </style>
+    <style name="paymentBtn">
+        <item name="android:layout_width" >match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/book_button_background</item>
+        <item name="android:text">Choose payment method</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+    <style name="confirmBtn">
+        <item name="android:layout_width" >match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/book_button_background</item>
+        <item name="android:text">Confirm</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">12dp</item>
+    </style>
 
 
 

@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.example.carrentalsystem.CarDetailsActivity;
 import com.example.carrentalsystem.R;
 import com.example.carrentalsystem.model.Item;
+import com.example.carrentalsystem.reservationform.ReservationDetials;
 
 import org.json.JSONArray;
 
@@ -162,6 +163,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     colorinput.setBackgroundColor(Color.parseColor(color));
 
                     cariv.setImageResource(getCarImageResource(carName.getText().toString()));
+                    Button button = dialog.findViewById(R.id.bookBtn);
+                    button.setOnClickListener(e -> {
+                        Intent intent = new Intent(context, ReservationDetials.class);
+                        context.startActivity(intent);
+                        dialog.dismiss();
+                    });
+
                     dialog.show();
                 }
             });
