@@ -1,12 +1,20 @@
 package com.example.carrentalsystem;
 
 import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+
+import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +27,8 @@ import android.app.ProgressDialog;
 
 
 public class SignIn extends AppCompatActivity {
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     EditText emailEditText;
     EditText passwordEditText;
@@ -51,6 +61,19 @@ public class SignIn extends AppCompatActivity {
                 }
             }
         });
+        setupSharedPrefs();
+    }
+
+    private void setupSharedPrefs() {
+        prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        editor = prefs.edit();
+        editor.putString("USERNAME",
+                "alice_jones");
+
+        editor.putBoolean("TOKEN", false);
+        editor.commit();
+        Intent intent = new Intent(this,MainActivityForUser.class);
+        startActivity(intent);
     }
 
     @Override
