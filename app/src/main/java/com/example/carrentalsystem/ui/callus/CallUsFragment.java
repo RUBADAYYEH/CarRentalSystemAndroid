@@ -20,128 +20,142 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.carrentalsystem.R;
+import android.app.ProgressDialog;
+import android.os.Bundle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CallUsFragment extends Fragment {
 
-    private ImageView phoneImageView, emailImageView, instaImageView, teleImageView, fbookImageView, whatsImageView;
+    private ImageView phoneImageView;
+    private ImageView emailImageView;
+    private ImageView instaImageView;
+    private ImageView teleImageView;
+    private ImageView fbookImageView;
+    private ImageView whatsImageView;
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
     private static final String PREFERENCES_FILE = "com.example.myapp.PREFERENCES_FILE";
+    private ProgressDialog progressDialog;
 
-    @Nullable
+
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_call_us, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences(PREFERENCES_FILE, getActivity().MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(getActivity());
-
         phoneImageView = view.findViewById(R.id.phoneImageView);
         emailImageView = view.findViewById(R.id.emailImageView);
         instaImageView = view.findViewById(R.id.instaImageView);
         teleImageView = view.findViewById(R.id.teleImageView);
         fbookImageView = view.findViewById(R.id.fbookImageView);
         whatsImageView = view.findViewById(R.id.whatsImageView);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Fetching contacts details...");
+        progressDialog.setCancelable(false);
 
-        phoneImageView.setOnClickListener(new View.OnClickListener() {
+        phoneImageView.setOnClickListener(new View.OnClickListener() {// get the campany phone number
             @Override
             public void onClick(View v) {
+
                 makeCall();
             }
         });
 
-        emailImageView.setOnClickListener(new View.OnClickListener() {
+        emailImageView.setOnClickListener(new View.OnClickListener() {// get the campany email
             @Override
             public void onClick(View v) {
                 sendEmail();
             }
         });
 
-        instaImageView.setOnClickListener(new View.OnClickListener() {
+        instaImageView.setOnClickListener(new View.OnClickListener() {// get the campany instegram account
             @Override
             public void onClick(View v) {
-                openInstagram();
+                openInsta();
             }
         });
 
-        teleImageView.setOnClickListener(new View.OnClickListener() {
+        teleImageView.setOnClickListener(new View.OnClickListener() {// get the campany telegram account
             @Override
             public void onClick(View v) {
-                openTelegram();
+                openTele();
             }
         });
 
-        fbookImageView.setOnClickListener(new View.OnClickListener() {
+        fbookImageView.setOnClickListener(new View.OnClickListener() {// get the campany facebook account
             @Override
             public void onClick(View v) {
-                openFacebook();
+                openFb();
             }
         });
 
-        whatsImageView.setOnClickListener(new View.OnClickListener() {
+        whatsImageView.setOnClickListener(new View.OnClickListener() {// get the campany whats account
             @Override
             public void onClick(View v) {
-                openWhatsApp();
+                openWhapp();
             }
         });
 
-        fetchContactDetails();
+        ftchdetails();
 
         return view;
     }
 
-    private void makeCall() {
+    private void makeCall() {// method to make call
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:+123456789"));
+        intent.setData(Uri.parse("tel:+970597908705"));
         startActivity(intent);
     }
 
-    private void sendEmail() {
+    private void sendEmail() {// method to send wmail
         Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:contact@myapp.com"));
+        intent.setData(Uri.parse("mailto:yunanawahdah2003@gmail.com"));
         startActivity(intent);
     }
 
-    private void openInstagram() {
+    private void openInsta() {// method to oper the insta
         Uri uri = Uri.parse("http://instagram.com/_u/myapp");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         intent.setPackage("com.instagram.android");
         try {
             startActivity(intent);
         } catch (Exception e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://instagram.com/myapp")));
+           Intent intnt = new Intent(Intent.ACTION_VIEW, Uri.parse("http://instagram.com/myapp"));
+
+            startActivity(intnt);
         }
     }
 
-    private void openTelegram() {
-        Uri uri = Uri.parse("https://t.me/myapp");
+    private void openTele() {// method to open telegram
+        Uri uri = Uri.parse("https://telegram.org/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
 
-    private void openFacebook() {
-        Uri uri = Uri.parse("fb://page/myapp");
+    private void openFb() {// method to open face book
+        Uri uri = Uri.parse("http://facebook.com/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         try {
             startActivity(intent);
         } catch (Exception e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://facebook.com/myapp")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://facebook.com/")));
         }
     }
 
-    private void openWhatsApp() {
-        Uri uri = Uri.parse("https://wa.me/123456789");
+    private void openWhapp() {// method to open whatsup
+        Uri uri = Uri.parse("https://wa.me/0597908705");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
 
-    private void fetchContactDetails() {
+    private void ftchdetails() {
         String url = "https://api.myapp.com/contact-details";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+        JsonObjectRequest obj = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
@@ -154,7 +168,7 @@ public class CallUsFragment extends Fragment {
                             String facebook = response.getString("facebook");
                             String whatsapp = response.getString("whatsapp");
 
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            SharedPreferences.Editor editor = sharedPreferences.edit();// save it using shared prefrences
                             editor.putString("phone", phone);
                             editor.putString("email", email);
                             editor.putString("instagram", instagram);
@@ -172,10 +186,17 @@ public class CallUsFragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Error fetching data", Toast.LENGTH_SHORT).show();
+                  //      Toast.makeText(getActivity(), "Error while fetching data", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(obj);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (progressDialog != null && progressDialog.isShowing()==true) {
+            progressDialog.dismiss();
+        }
     }
 }
