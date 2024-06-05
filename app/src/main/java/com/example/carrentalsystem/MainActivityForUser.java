@@ -1,11 +1,11 @@
 package com.example.carrentalsystem;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import android.preference.PreferenceManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,11 +22,18 @@ public class MainActivityForUser extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainForUserBinding binding;
+    public static  String username;
+    private SharedPreferences prefs;
+
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
 
@@ -70,7 +77,11 @@ public class MainActivityForUser extends AppCompatActivity {
     }
 
 
-    public void ViewCarDetails(View view) {
 
+
+    private void setupSharedPrefs() {
+        prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        username=prefs.getString("USERNAME","user");
     }
+
 }

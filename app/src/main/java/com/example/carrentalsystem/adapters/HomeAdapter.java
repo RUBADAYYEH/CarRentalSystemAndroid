@@ -15,9 +15,11 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Response;
 import com.example.carrentalsystem.CarDetailsActivity;
+import com.example.carrentalsystem.MainActivityForUser;
 import com.example.carrentalsystem.R;
 import com.example.carrentalsystem.model.Item;
 import com.example.carrentalsystem.reservationform.ReservationDetials;
+import com.example.carrentalsystem.ui.home.HomeFragment;
 
 import org.json.JSONArray;
 
@@ -166,6 +168,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     Button button = dialog.findViewById(R.id.bookBtn);
                     button.setOnClickListener(e -> {
                         Intent intent = new Intent(context, ReservationDetials.class);
+                        intent.putExtra("CARID",carid.getText());
+
                         context.startActivity(intent);
                         dialog.dismiss();
                     });

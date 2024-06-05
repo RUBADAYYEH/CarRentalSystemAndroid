@@ -16,8 +16,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".SignUp"
+            android:exported="false" />
+        <activity
             android:name=".reservationform.PaymentDetails"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.example.carrentalsystem.reservationform.PaymentDetails" />
 
@@ -26,20 +29,25 @@
         </activity>
         <activity
             android:name=".reservationform.ReservationDetials"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.example.carrentalsystem.reservationform.ReservationDetials" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SignOut"
             android:exported="false" />
         <activity
             android:name=".SignIn"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".IntroActivity"
             android:exported="false" />
@@ -57,11 +65,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CarRentalSystem.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

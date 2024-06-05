@@ -49,11 +49,18 @@
             android:id="@+id/availableFromDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="select your date"
+            android:text="select your start date"
+            android:textSize="18dp" />
+        <TextView
+            android:id="@+id/enddate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="select your end date"
             android:textSize="18dp" />
 
         <CalendarView
             android:id="@+id/calendarView"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
