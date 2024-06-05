@@ -53,6 +53,13 @@
                 android:layout_marginEnd="32dp"
                 />
         </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:clickable="true"
+                android:onClick="searchOnLocation"
+                android:text=" Search location instead? "/>
 
             <LinearLayout
                 android:id="@+id/linear"
@@ -77,7 +84,9 @@
 
 
 
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_below="@+id/linear"
                 android:id="@+id/linear_categories"

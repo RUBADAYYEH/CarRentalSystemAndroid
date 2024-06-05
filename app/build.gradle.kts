@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
 }
 
 android {
@@ -49,8 +50,8 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("androidx.cardview:cardview:1.0.0")
-    implementation("com.google.android.gms:play-services-maps:18.0.2")
-    implementation("com.google.android.material:material:1.6.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
+
 
 
 }

@@ -32,6 +32,7 @@ import com.example.carrentalsystem.CarDetailsActivity;
 import com.example.carrentalsystem.MainActivityForUser;
 import com.example.carrentalsystem.R;
 import com.example.carrentalsystem.adapters.HomeAdapter;
+import com.example.carrentalsystem.location.LocationActivity;
 import com.example.carrentalsystem.model.Item;
 
 import org.json.JSONArray;
@@ -413,5 +414,12 @@ public class HomeFragment extends Fragment {
        Intent intent =new Intent(getContext(),
                CarDetailsActivity.class);
        startActivity(intent);
+    }
+
+
+
+    public void searchOnLocation(View view) {
+        Intent intent=new Intent(getContext(), LocationActivity.class);
+        startActivity(intent);
     }
 }
