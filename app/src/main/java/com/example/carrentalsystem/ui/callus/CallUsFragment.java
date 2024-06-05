@@ -40,9 +40,9 @@ public class CallUsFragment extends Fragment {
     private ProgressDialog progressDialog;
 
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_call_us, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences(PREFERENCES_FILE, getActivity().MODE_PRIVATE);
@@ -153,8 +153,7 @@ public class CallUsFragment extends Fragment {
     }
 
     private void ftchdetails() {
-        progressDialog.show();
-        String url = "https://api.app.com/contactInfo";
+        String url = "https://api.myapp.com/contact-details";
 
         JsonObjectRequest obj = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -187,7 +186,7 @@ public class CallUsFragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Error while fetching data", Toast.LENGTH_SHORT).show();
+                  //      Toast.makeText(getActivity(), "Error while fetching data", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -196,7 +195,7 @@ public class CallUsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (progressDialog != null && progressDialog.isShowing()) {
+        if (progressDialog != null && progressDialog.isShowing()==true) {
             progressDialog.dismiss();
         }
     }

@@ -16,11 +16,7 @@
         android:orientation="vertical"
 
         >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/leftarrow"
-            android:contentDescription="Back" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
