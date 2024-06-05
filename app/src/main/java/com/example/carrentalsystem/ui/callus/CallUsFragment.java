@@ -1,66 +1,181 @@
 package com.example.carrentalsystem.ui.callus;
 
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.carrentalsystem.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CallUsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CallUsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ImageView phoneImageView, emailImageView, instaImageView, teleImageView, fbookImageView, whatsImageView;
+    private SharedPreferences sharedPreferences;
+    private RequestQueue requestQueue;
+    private static final String PREFERENCES_FILE = "com.example.myapp.PREFERENCES_FILE";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CallUsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CallUsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CallUsFragment newInstance(String param1, String param2) {
-        CallUsFragment fragment = new CallUsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_call_us, container, false);
+
+        sharedPreferences = getActivity().getSharedPreferences(PREFERENCES_FILE, getActivity().MODE_PRIVATE);
+        requestQueue = Volley.newRequestQueue(getActivity());
+
+        phoneImageView = view.findViewById(R.id.phoneImageView);
+        emailImageView = view.findViewById(R.id.emailImageView);
+        instaImageView = view.findViewById(R.id.instaImageView);
+        teleImageView = view.findViewById(R.id.teleImageView);
+        fbookImageView = view.findViewById(R.id.fbookImageView);
+        whatsImageView = view.findViewById(R.id.whatsImageView);
+
+        phoneImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeCall();
+            }
+        });
+
+        emailImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
+
+        instaImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openInstagram();
+            }
+        });
+
+        teleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTelegram();
+            }
+        });
+
+        fbookImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFacebook();
+            }
+        });
+
+        whatsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhatsApp();
+            }
+        });
+
+        fetchContactDetails();
+
+        return view;
+    }
+
+    private void makeCall() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:+123456789"));
+        startActivity(intent);
+    }
+
+    private void sendEmail() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:contact@myapp.com"));
+        startActivity(intent);
+    }
+
+    private void openInstagram() {
+        Uri uri = Uri.parse("http://instagram.com/_u/myapp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setPackage("com.instagram.android");
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://instagram.com/myapp")));
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_call_us, container, false);
+    private void openTelegram() {
+        Uri uri = Uri.parse("https://t.me/myapp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    private void openFacebook() {
+        Uri uri = Uri.parse("fb://page/myapp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://facebook.com/myapp")));
+        }
+    }
+
+    private void openWhatsApp() {
+        Uri uri = Uri.parse("https://wa.me/123456789");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    private void fetchContactDetails() {
+        String url = "https://api.myapp.com/contact-details";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String phone = response.getString("phone");
+                            String email = response.getString("email");
+                            String instagram = response.getString("instagram");
+                            String telegram = response.getString("telegram");
+                            String facebook = response.getString("facebook");
+                            String whatsapp = response.getString("whatsapp");
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("phone", phone);
+                            editor.putString("email", email);
+                            editor.putString("instagram", instagram);
+                            editor.putString("telegram", telegram);
+                            editor.putString("facebook", facebook);
+                            editor.putString("whatsapp", whatsapp);
+                            editor.apply();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getActivity(), "Error parsing data", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "Error fetching data", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        requestQueue.add(jsonObjectRequest);
     }
 }
