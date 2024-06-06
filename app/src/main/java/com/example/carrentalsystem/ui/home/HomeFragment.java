@@ -238,7 +238,7 @@ AppCompatButton searchOnLocation;
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        itemList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("price"),obj.getString("carid"),obj.getString("color"),obj.getString("model"),obj.getString("seatsnumber")));
+                        itemList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("PRICE"),obj.getString("carid"),obj.getString("color"),obj.getString("MODEL"),obj.getString("SEAT")));
                     }catch(JSONException exception){
                         Log.d("Error", exception.toString());
                     }
@@ -286,7 +286,7 @@ AppCompatButton searchOnLocation;
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        topDealList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("price"),obj.getString("carid"),obj.getString("color"),obj.getString("model"),obj.getString("seatsnumber")));
+                        topDealList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("PRICE"),obj.getString("carid"),obj.getString("color"),obj.getString("MODEL"),obj.getString("SEAT")));
                     }catch(JSONException exception){
                         Log.d("Error", exception.toString());
                     }
@@ -325,7 +325,7 @@ AppCompatButton searchOnLocation;
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        itemList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("price"),obj.getString("carid"),obj.getString("color"),obj.getString("model"),obj.getString("seatsnumber")));
+                        itemList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("PRICE"),obj.getString("carid"),obj.getString("color"),obj.getString("MODEL"),obj.getString("SEAT")));
                     }catch(JSONException exception){
                         Log.d("Error", exception.toString());
                     }
