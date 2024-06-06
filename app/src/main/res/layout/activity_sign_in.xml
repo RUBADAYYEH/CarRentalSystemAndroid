@@ -1,141 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="#D9CEEC"
-    android:backgroundTint="#D0C3E8"
-    android:orientation="vertical"
     tools:context=".SignIn">
 
-    <EditText
-        android:id="@+id/editText_email"
-        android:layout_width="308dp"
-        android:layout_height="58dp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/baseline_email_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:padding="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D0C3E8"
+        tools:context=".Profile">
 
-    <CheckBox
-        android:id="@+id/checkBox_rememberMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:buttonTint="@color/black"
-        android:padding="20dp"
-        android:text="Remember Me"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.183"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.352" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText_password"
-        android:layout_width="308dp"
-        android:layout_height="58dp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/baseline_lock_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:padding="20dp"
+                android:background="#AD9FC1"
 
-        app:layout_constraintVertical_bias="0.245"
-        app:passwordToggleEnabled="true" />
+                android:layout_marginBottom="50dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WELCOME TO RYDI !! Please log in  . . . . "
+                    android:textSize="30dp"
+                    android:fontFamily="casual"
+                    android:textAlignment="center"
+                    android:layout_marginTop="100dp"
+                    ></TextView>
 
 
-    <Button
-        android:id="@+id/button_signIn"
-        android:layout_width="340dp"
-        android:layout_height="51dp"
-        android:background="#673AB7"
-
-        android:padding="10dp"
-        android:text="Sign in"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
-
-    <Button
-        android:id="@+id/bottun_OpenSignUp"
-        android:layout_width="56dp"
-        android:layout_height="19dp"
-        android:background="#FFFFFF"
-        android:elevation="0dp"
-        android:stateListAnimator="@null"
-        android:text="Sign up"
-        android:textAllCaps="false"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.688"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="Don't have an account?"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.401"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
-
-    <ImageButton
-        android:id="@+id/imgBtn_visible"
-        android:layout_width="38dp"
-        android:layout_height="34dp"
-        android:layout_marginEnd="8dp"
-        android:background="#EEEEEE"
-        android:src="@drawable/ic_visible"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_password"
-        app:layout_constraintEnd_toEndOf="@+id/editText_password"
-        app:layout_constraintTop_toTopOf="@+id/editText_password"
-        app:layout_constraintVertical_bias="0.583" />
+            </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
 
-    
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_fullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:drawablePadding="10dp"
+                        android:hint="Full Name"
+                        android:layout_marginBottom="10dp"
+
+                        android:textSize="15dp"
+                        android:padding="10dp"
+                        android:fontFamily="casual" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:hint="Password"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="15dp"
+                        android:padding="10dp"
+                        android:fontFamily="casual"
+                        android:drawableStart="@drawable/baseline_lock_24"
+                        android:drawableLeft="@drawable/baseline_lock_24"
+                        android:drawablePadding="10dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
 
 
-</RelativeLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+
+
+
+
+
+                <Button
+                    android:id="@+id/btn"
+                    style="@style/bookBtn"
+                    android:onClick="update"
+                    android:text="Log in" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
