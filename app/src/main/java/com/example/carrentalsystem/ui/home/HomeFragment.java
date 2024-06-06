@@ -1,7 +1,9 @@
 package com.example.carrentalsystem.ui.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +29,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.carrentalsystem.CarDetailsActivity;
+import com.example.carrentalsystem.MainActivityForUser;
 import com.example.carrentalsystem.R;
 import com.example.carrentalsystem.adapters.HomeAdapter;
+import com.example.carrentalsystem.location.LocationActivity;
 import com.example.carrentalsystem.model.Item;
 
 import org.json.JSONArray;
@@ -41,6 +45,8 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    public static TextView usernameTV;
+
     private RecyclerView topDealRV;
     private HomeAdapter adapter;
     private HomeAdapter adapter1;
@@ -48,6 +54,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView searchcarsRV;
     private TextView searchresultTV;
     private SearchView searchView;
+    public static  String username;
+    private SharedPreferences prefs;
 
     RelativeLayout sevenseatslayout;
     RelativeLayout fiveseatslayout;
@@ -73,6 +81,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        usernameTV=view.findViewById(R.id.usernameTV);
+        prefs= PreferenceManager.getDefaultSharedPreferences(getContext());
+        username=prefs.getString("USERNAME","user");
+        usernameTV.setText("Hi "+ username);
+
         filterlayout=view.findViewById(R.id.filterlayout);
          sevenseatslayout=view.findViewById(R.id.sevenseatslayout);
          sevenseatslayout.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +105,7 @@ public class HomeFragment extends Fragment {
 
              }
          });
+
          fiveseatslayout=view.findViewById(R.id.fiveseatslayout);
         fiveseatslayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,5 +414,12 @@ public class HomeFragment extends Fragment {
        Intent intent =new Intent(getContext(),
                CarDetailsActivity.class);
        startActivity(intent);
+    }
+
+
+
+    public void searchOnLocation(View view) {
+        Intent intent=new Intent(getContext(), LocationActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,11 +1,11 @@
 package com.example.carrentalsystem;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import android.preference.PreferenceManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,6 +22,12 @@ public class MainActivityForUser extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainForUserBinding binding;
+    public static  String username;
+    private SharedPreferences prefs;
+
+
+
+
 
 
     @Override
@@ -30,18 +36,12 @@ public class MainActivityForUser extends AppCompatActivity {
 
 
 
+
         binding = ActivityMainForUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMainActivityForUser.toolbar);
-        binding.appBarMainActivityForUser.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -70,7 +70,11 @@ public class MainActivityForUser extends AppCompatActivity {
     }
 
 
-    public void ViewCarDetails(View view) {
 
+
+    private void setupSharedPrefs() {
+        prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        username=prefs.getString("USERNAME","user");
     }
+
 }

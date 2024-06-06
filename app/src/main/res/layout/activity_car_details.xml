@@ -152,6 +152,7 @@
         style="@style/bookBtn"
         android:layout_width="300dp"
         android:layout_margin="8dp"
+        android:onClick="viewReservationForm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/colorinput" />
 
