@@ -1,177 +1,108 @@
 package com.example.carrentalsystem;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.carrentalsystem.reservationform.PaymentDetails;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignOut extends AppCompatActivity {
 
-    private EditText editTextFirstName;
-    private EditText editTextLastName;
-    private EditText editTextPhoneNumber;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
-    private EditText editTextConfirmPassword;
-    private Spinner spinnerGender;
-    private Spinner spinnerCity;
-    private Spinner spinnerCountry;
-    private Button buttonSignUp;
-    private ImageButton imgBtnVisibility;
-    private ImageButton imgBtnConfirmVisibility;
-    private ProgressDialog progressDialog;
-    private boolean isPasswordVisible = false;
-    private boolean isConfirmPasswordVisible = false;
-    private RequestQueue requestQueue;
-    private static final String URL = "http://xampp/htdocs/signup.php";
+    EditText firstNameEditText, licenseEditText, phoneEditText, passwordEditText, confirmPasswordEditText;
+    Button signUpButton;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_out);
 
-        editTextFirstName = findViewById(R.id.editText_registerFirstName);
-        editTextLastName = findViewById(R.id.editText_registerLastName);
-        editTextPhoneNumber = findViewById(R.id.editText_editPhoneNumber);
-        editTextEmail = findViewById(R.id.editText_registerEmail);
-        editTextPassword = findViewById(R.id.editText_registerPassword);
-        editTextConfirmPassword = findViewById(R.id.editText_registerConfirmPassword);
-        spinnerGender = findViewById(R.id.spinner_registerGender);
-        spinnerCity = findViewById(R.id.spinner_registerCity);
-        spinnerCountry = findViewById(R.id.spinner_registerCountry);
-        buttonSignUp = findViewById(R.id.button_registerSignUp);
-        imgBtnVisibility = findViewById(R.id.imgBtn_visibility);
-        imgBtnConfirmVisibility = findViewById(R.id.imgBtn_confirm_visibility);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Registering the user...");
-        progressDialog.setCancelable(false);
-        requestQueue = Volley.newRequestQueue(this);
+        firstNameEditText = findViewById(R.id.editText_registerFirstName);
+        licenseEditText = findViewById(R.id.editText_license);
+        phoneEditText = findViewById(R.id.editText_editPhoneNumber);
+        passwordEditText = findViewById(R.id.editText_registerPassword);
+        confirmPasswordEditText = findViewById(R.id.editText_registerConfirmPassword);
+        signUpButton = findViewById(R.id.button_registerSignUp);
 
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+        queue = Volley.newRequestQueue(this);
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerUser();
-            }
-        });
+                String firstName = firstNameEditText.getText().toString().trim();
+                String license = licenseEditText.getText().toString().trim();
+                String phone = phoneEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
-        imgBtnVisibility.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                togglePasswordVisibility(editTextPassword, imgBtnVisibility);
-            }
-        });
-
-        imgBtnConfirmVisibility.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                togglePasswordVisibility(editTextConfirmPassword, imgBtnConfirmVisibility);
-            }
-        });
-    }
-
-    private void togglePasswordVisibility(EditText passwordField, ImageButton toggleButton) {
-        if (!isPasswordVisible) {
-            passwordField.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            toggleButton.setImageResource(R.drawable.ic_visible);
-        } else {
-            passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            toggleButton.setImageResource(R.drawable.ic_invisible);
-        }
-        isPasswordVisible = !isPasswordVisible;
-        passwordField.setSelection(passwordField.getText().length());
-    }
-
-    private void registerUser() {
-        String firstName = editTextFirstName.getText().toString().trim();
-        String lastName = editTextLastName.getText().toString().trim();
-        String phoneNumber = editTextPhoneNumber.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
-        String gender = spinnerGender.getSelectedItem().toString();
-        String city = spinnerCity.getSelectedItem().toString();
-        String country = spinnerCountry.getSelectedItem().toString();
-
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
-        } else {
-            progressDialog.show();
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-                            try {
-                                JSONObject obj = new JSONObject(response);
-                                boolean success = obj.getBoolean("success");
-                                String message = obj.getString("message");
-                                Toast.makeText(SignOut.this, message, Toast.LENGTH_SHORT).show();
-                                if (success) {
-                                    saveUserData();
-                                    startActivity(new Intent(SignOut.this, SignIn.class));
-                                    finish();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(SignOut.this, "Error parsing JSON", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            progressDialog.dismiss();
-                            Log.e("SignUp", "Error: " + error.getMessage());
-                            Toast.makeText(SignOut.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("first_name", firstName);
-                    params.put("last_name", lastName);
-                    params.put("phone_number", phoneNumber);
-                    params.put("email", email);
-                    params.put("password", password);
-                    params.put("gender", gender);
-                    params.put("city", city);
-                    params.put("country", country);
-                    return params;
+                if (!firstName.isEmpty() && !license.isEmpty() && !phone.isEmpty() && !password.isEmpty() && password.equals(confirmPassword)) {
+                    signUp(firstName, license, phone, password);
+                } else {
+                    Toast.makeText(SignOut.this, "Please fill in all the fields correctly", Toast.LENGTH_SHORT).show();
                 }
-            };
-            requestQueue.add(stringRequest);
-        }
+            }
+        });
     }
 
-    private void saveUserData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("first_name", editTextFirstName.getText().toString().trim());
-        editor.putString("last_name", editTextLastName.getText().toString().trim());
-        editor.putString("phone_number", editTextPhoneNumber.getText().toString().trim());
-        editor.putString("email", editTextEmail.getText().toString().trim());
-        editor.putString("gender", spinnerGender.getSelectedItem().toString());
-        editor.putString("city", spinnerCity.getSelectedItem().toString());
-        editor.putString("country", spinnerCountry.getSelectedItem().toString());
-        editor.apply();
+    private void signUp(String firstName, String license, String phone, String password) {
+        String url = "http://10.0.2.2:80/rest/signup.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        Log.e("TAG", "Response is " + s);
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+                            Toast.makeText(SignOut.this, jsonObject.getString("status"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(SignOut.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            public String getBodyContentType() {
+                return super.getBodyContentType();
+            }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", firstName);
+                params.put("license", license);
+                params.put("phone", phone);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
+
 }

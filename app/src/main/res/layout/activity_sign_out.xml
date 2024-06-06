@@ -1,144 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#B7ADCA"
     android:backgroundTint="#D4CCE3"
-    app:circularflow_defaultRadius="30dp"
-    app:layout_constraintCircleRadius="30dp"
-    tools:context=".SignOut">
+    android:orientation="vertical"
+    tools:context=".SignOut"
+    android:gravity="center">
 
-    <Button
-        android:id="@+id/button_registerSignUp"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="3dp"
-        android:background="@color/design_default_color_primary"
-        android:padding="10dp"
-        android:text="Sign up"
-        android:textAlignment="center"
-
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:circularflow_radiusInDP="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.985" />
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="144dp"
+        android:layout_height="103dp"
+        android:paddingTop="20dp"
+        android:src="@drawable/signupicon"
+        />
 
     <EditText
         android:id="@+id/editText_registerFirstName"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="First Name"
+        style="@style/SignUpEditTextStyle"
+        android:hint="Username"
         android:inputType="textPersonName|textCapWords"
         android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:textColor="#000000"
-        android:textColorHint="@color/black"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158"
-
         />
 
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="291dp" />
-
     <EditText
-        android:id="@+id/editText_registerLastName"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/editText_license"
+        style="@style/SignUpEditTextStyle"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="Last Name"
+        android:hint="License Number"
         android:inputType="textPersonName|textCapWords"
         android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:textColor="#000000"
-        android:textColorHint="@color/black"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.237" />
+       />
 
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="483dp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="335dp"
         android:layout_height="45dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
         android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.37"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.889">
-
-        <EditText
-            android:id="@+id/editText_editPhoneNumber"
-            android:layout_width="233dp"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            android:padding="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="1dp"
-            android:paddingRight="15dp"
-            android:textColor="#000000"
-            android:textColorHint="@color/black"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_editCountryCode"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView_editCountryCode"
-            app:layout_constraintVertical_bias="0.521" />
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView_editCountryFlag"
             android:layout_width="46dp"
             android:layout_height="37dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.545"
-            app:srcCompat="@drawable/palestine" />
+            android:src="@drawable/palestine"
+            />
 
         <TextView
             android:id="@+id/textView_editCountryCode"
@@ -146,253 +54,36 @@
             android:layout_height="wrap_content"
             android:text="+970"
             android:textColor="#4A4646"
-            android:textColorHint="#FFFFFF"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_editCountryFlag"
-            app:layout_constraintEnd_toEndOf="@+id/editText_editPhoneNumber"
-            app:layout_constraintHorizontal_bias="0.166"
-            app:layout_constraintStart_toStartOf="@+id/imageView_editCountryFlag"
-            app:layout_constraintTop_toTopOf="@+id/imageView_editCountryFlag" />
+            android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/editText_registerEmail"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/baseline_email_24"
-        android:drawableLeft="@drawable/baseline_email_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Email"
-
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:paddingStart="10dp"
-        android:paddingLeft="10dp"
-
-
-        android:paddingRight="15dp"
-        android:textColor="#000000"
-
-        android:textColorHint="@color/black"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
-
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="161dp" />
-
-    <EditText
-        android:id="@+id/editText_registerConfirmPassword"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:textColor="#000000"
-        android:textColorHint="@color/black"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
-
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="226dp" />
-
-    <Spinner
-        android:id="@+id/spinner_registerGender"
-        style="@style/SpinnerTheme"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:spinnerMode="dropdown"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334" />
-
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="419dp" />
-
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="611dp" />
+        <EditText
+            android:id="@+id/editText_editPhoneNumber"
+            style="@style/SignUpEditTextStyle"
+            android:hint="Phone Number"
+            />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editText_registerPassword"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
+        style="@style/SignUpEditTextStyle"
         android:drawableStart="@drawable/baseline_lock_24"
-        android:drawableLeft="@drawable/baseline_lock_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Password"
+      android:layout_marginTop="10dp"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:padding="10dp"
-        android:paddingStart="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:textColor="#000000"
-        android:textColorHint="@color/black"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.522" />
+        android:padding="10dp"/>
 
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="355dp" />
-
-    <Spinner
-        android:id="@+id/spinner_registerCity"
-        style="@style/SpinnerTheme"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:spinnerMode="dropdown"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.798" />
-
-    <Spinner
-        android:id="@+id/spinner_registerCountry"
-        style="@style/SpinnerTheme"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+    <EditText
+        android:id="@+id/editText_registerConfirmPassword"
+        style="@style/SignUpEditTextStyle"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:spinnerMode="dropdown"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.709" />
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+       />
 
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="381dp"
-        tools:layout_editor_absoluteY="547dp" />
-
-    <LinearLayout
-        android:layout_width="31dp"
-        android:layout_height="796dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="-43dp"></LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="144dp"
-        android:layout_height="103dp"
-        android:paddingTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/signupicon" />
-
-    <ImageButton
-        android:id="@+id/imgBtn_visibility"
-        android:layout_width="38dp"
-        android:layout_height="34dp"
-        android:layout_marginEnd="6dp"
-        android:background="#EEEEEE"
-        android:src="@drawable/ic_visible"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_registerPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editText_registerPassword"
-        app:layout_constraintTop_toTopOf="@+id/editText_registerPassword"
-        app:layout_constraintVertical_bias="0.562" />
-
-    <ImageButton
-        android:id="@+id/imgBtn_confirm_visibility"
-        android:layout_width="38dp"
-        android:layout_height="34dp"
-        android:layout_marginEnd="6dp"
-        android:background="#EEEEEE"
-        android:src="@drawable/ic_visible"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_registerConfirmPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editText_registerConfirmPassword"
-        app:layout_constraintTop_toTopOf="@+id/editText_registerConfirmPassword" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+    <Button
+        android:id="@+id/button_registerSignUp"
+        style="@style/bookBtn"
+        android:text="@string/sign_up"
+        />
+</LinearLayout>

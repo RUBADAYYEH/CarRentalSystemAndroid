@@ -200,6 +200,17 @@
         <item name="android:layout_marginStart">70dp</item>
         <item name="android:layout_marginTop">390dp</item>
     </style>
+    <style name="SignUpEditTextStyle">
+        <item name="android:layout_width">335dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:hint">Username</item>
+        <item name="android:inputType">textPersonName|textCapWords</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:textSize">15dp</item>
+    </style>
 
 
 

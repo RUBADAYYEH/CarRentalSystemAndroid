@@ -86,7 +86,7 @@ public class SignIn extends AppCompatActivity {
 
     private void signIn() {
         queue = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2:80/signin.php?username=" + emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+        String url = "http://10.0.2.2:80/rest/signin.php?username=" + emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
                 null, new Response.Listener<JSONObject>() {
             @Override

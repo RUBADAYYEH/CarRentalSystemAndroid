@@ -68,6 +68,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.carid.setText(itemList.get(position).getCarid());
         holder.color=itemList.get(position).getColor();
         holder.model.setText(itemList.get(position).getModel());
+        holder.seats=itemList.get(position).getSeatsNumber()+" Seats";
 
 
 
@@ -112,6 +113,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         private TextView carid;
         private String color;
         ImageView fav_deal;
+        String seats;
 
         private TextView model;
 
@@ -124,6 +126,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             carid=itemView.findViewById(R.id.carid);
             model=itemView.findViewById(R.id.carmodel);
             fav_deal=itemView.findViewById(R.id.fav_deal);
+
+
 
             itemView.setOnClickListener( new View.OnClickListener(){
 
@@ -139,7 +143,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     TextView brandInput = dialog.findViewById(R.id.brandInput);
                     brandInput.setText(carName.getText().toString()+"/"+model.getText().toString());
                     TextView seatsInput = dialog.findViewById(R.id.seatsInput);
-                    seatsInput.setText(seatsInput.getText().toString());
+                    seatsInput.setText(seats);
 
                     Button colorinput=dialog.findViewById(R.id.colorinput);
                     colorinput.setBackgroundColor(Color.parseColor(color));
