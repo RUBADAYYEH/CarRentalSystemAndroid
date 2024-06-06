@@ -27,14 +27,13 @@ import java.util.Map;
 public class SignOut extends AppCompatActivity {
 
     private EditText editTextFirstName;
-    private EditText editTextLastName;
+    private EditText license;
+
     private EditText editTextPhoneNumber;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
-    private Spinner spinnerGender;
-    private Spinner spinnerCity;
-    private Spinner spinnerCountry;
+
     private Button buttonSignUp;
     private ImageButton imgBtnVisibility;
     private ImageButton imgBtnConfirmVisibility;
@@ -50,14 +49,11 @@ public class SignOut extends AppCompatActivity {
         setContentView(R.layout.activity_sign_out);
 
         editTextFirstName = findViewById(R.id.editText_registerFirstName);
-        editTextLastName = findViewById(R.id.editText_registerLastName);
+        license=findViewById(R.id.editText_license);
         editTextPhoneNumber = findViewById(R.id.editText_editPhoneNumber);
         editTextEmail = findViewById(R.id.editText_registerEmail);
         editTextPassword = findViewById(R.id.editText_registerPassword);
         editTextConfirmPassword = findViewById(R.id.editText_registerConfirmPassword);
-        spinnerGender = findViewById(R.id.spinner_registerGender);
-        spinnerCity = findViewById(R.id.spinner_registerCity);
-        spinnerCountry = findViewById(R.id.spinner_registerCountry);
         buttonSignUp = findViewById(R.id.button_registerSignUp);
         imgBtnVisibility = findViewById(R.id.imgBtn_visibility);
         imgBtnConfirmVisibility = findViewById(R.id.imgBtn_confirm_visibility);
@@ -102,14 +98,11 @@ public class SignOut extends AppCompatActivity {
 
     private void registerUser() {
         String firstName = editTextFirstName.getText().toString().trim();
-        String lastName = editTextLastName.getText().toString().trim();
         String phoneNumber = editTextPhoneNumber.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
-        String gender = spinnerGender.getSelectedItem().toString();
-        String city = spinnerCity.getSelectedItem().toString();
-        String country = spinnerCountry.getSelectedItem().toString();
+
 
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
@@ -148,13 +141,10 @@ public class SignOut extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("first_name", firstName);
-                    params.put("last_name", lastName);
+                    params.put("license", String.valueOf(license));
                     params.put("phone_number", phoneNumber);
                     params.put("email", email);
                     params.put("password", password);
-                    params.put("gender", gender);
-                    params.put("city", city);
-                    params.put("country", country);
                     return params;
                 }
             };
@@ -166,12 +156,9 @@ public class SignOut extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("first_name", editTextFirstName.getText().toString().trim());
-        editor.putString("last_name", editTextLastName.getText().toString().trim());
+        editor.putString("last_name", license.getText().toString().trim());
         editor.putString("phone_number", editTextPhoneNumber.getText().toString().trim());
         editor.putString("email", editTextEmail.getText().toString().trim());
-        editor.putString("gender", spinnerGender.getSelectedItem().toString());
-        editor.putString("city", spinnerCity.getSelectedItem().toString());
-        editor.putString("country", spinnerCountry.getSelectedItem().toString());
         editor.apply();
     }
 }
