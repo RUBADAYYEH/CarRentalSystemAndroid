@@ -72,9 +72,9 @@ private ImageView reservationimage;
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    reservationinfo.setText(jsonObject.getString("brand")+"/"+jsonObject.getString("model")+" "+jsonObject.getString("chapterlocation"));
+                    reservationinfo.setText(jsonObject.getString("brand")+"/"+jsonObject.getString("MODEL")+" "+jsonObject.getString("chapterlocation"));
 
-                   carPrice=jsonObject.getString("price");
+                   carPrice=jsonObject.getString("PRICE");
                     totalprice.setText("Total price: "+carPrice);
                     reservationimage.setImageResource(getCarImageResource(jsonObject.getString("brand")));
                     Toast.makeText(ReservationDetials.this, " current",

@@ -1,6 +1,7 @@
 package com.example.carrentalsystem.ui.profile;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.carrentalsystem.R;
+import com.example.carrentalsystem.SignIn;
 import com.example.carrentalsystem.adapters.HomeAdapter;
 import com.example.carrentalsystem.model.Item;
 import com.example.carrentalsystem.reservationform.PaymentDetails;
@@ -48,6 +51,9 @@ public class ProfileFragment extends Fragment {
     public String username;
 public  float currentBalance;
     private RequestQueue queue;
+    TextView editText_password;
+    Button btn;
+    TextView signout;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -85,10 +91,15 @@ public  float currentBalance;
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         super.onCreate(savedInstanceState);
+        btn=getView().findViewById(R.id.btn);
+      
+       
+        editText_password=getView().findViewById(R.id.editText_password);
         full_name=getView().findViewById(R.id.full_name);
         payment_lbl=getView().findViewById(R.id.payment_lbl);
         booking_lbl=getView().findViewById(R.id.booking_lbl);
         editText_phone=getView().findViewById(R.id.editText_phone);
+        signout=getView().findViewById(R.id.signout);
         license=getView().findViewById(R.id.license);
         prefs= PreferenceManager.getDefaultSharedPreferences(getContext());
         username=prefs.getString("USERNAME","user");
@@ -96,8 +107,54 @@ public  float currentBalance;
         fetchProfile();
         fetchBalance();
         fetchReservations();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatePhone();
+                update();
+            }
+        });
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SignIn.class);
+                startActivity(intent);
+            }
+        });
 
 
+    }
+
+    private void updatePhone() {
+        String url = "http://10.0.2.2:80/rest/updatephone.php?username="+username+"&newphone="+editText_phone.getText().toString();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.has("message")) {
+                                String message = response.getString("message");
+                                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+                            } else if (response.has("error")) {
+                                String error = response.getString("error");
+                                booking_lbl.setText(error);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "JSON error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
+            }
+        });
+
+        // Add the request to the RequestQueue
+
+        queue.add(request);
     }
 
     private void fetchProfile() {
@@ -185,6 +242,40 @@ public  float currentBalance;
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    public void update(View view) {
+    public void update( ) {
+
+        String url = "http://10.0.2.2:80/rest/updateuserpassword.php?username="+username+"&newpassword="+editText_password.getText().toString();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.has("message")) {
+                                String message = response.getString("message");
+                                Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+                            } else if (response.has("error")) {
+                                String error = response.getString("error");
+                                booking_lbl.setText(error);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "JSON error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
+            }
+        });
+
+        // Add the request to the RequestQueue
+
+        queue.add(request);
+
     }
+
+
+
 }

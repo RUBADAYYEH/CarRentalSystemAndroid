@@ -184,8 +184,20 @@
                 <Button
                     android:id="@+id/btn"
                     style="@style/bookBtn"
-                    android:onClick="update"
+
                     android:text="Edit" />
+                <TextView
+                    android:id="@+id/signout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/profile_image"
+                    android:fontFamily="casual"
+                    android:text="Sign out"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:includeFontPadding="false" />
 
             </LinearLayout>
         </LinearLayout>
