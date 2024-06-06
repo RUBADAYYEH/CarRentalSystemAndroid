@@ -32,9 +32,9 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        emailEditText = findViewById(R.id.editText_email);
+        emailEditText = findViewById(R.id.editText_fullName);
         passwordEditText = findViewById(R.id.editText_password);
-        signInButton = findViewById(R.id.button_signIn);
+        signInButton = findViewById(R.id.btn);
 
         requestQueue = Volley.newRequestQueue(this);
 
