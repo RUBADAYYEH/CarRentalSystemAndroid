@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,10 @@ import android.preference.PreferenceManager;
 import androidx.activity.EdgeToEdge;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -23,7 +28,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+
 import android.app.ProgressDialog;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.carrentalsystem.adapters.HomeAdapter;
+import com.example.carrentalsystem.model.Item;
+import com.example.carrentalsystem.reservationform.PaymentDetails;
 
 
 public class SignIn extends AppCompatActivity {
@@ -32,8 +50,10 @@ public class SignIn extends AppCompatActivity {
 
     EditText emailEditText;
     EditText passwordEditText;
-    Button signInButton;
+    AppCompatButton signInButton;
     private ProgressDialog progressDialog;
+    private RequestQueue queue;
+    public String username;
 
 
     @Override
@@ -41,9 +61,9 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        emailEditText = findViewById(R.id.editText_email);
-        passwordEditText = findViewById(R.id.editText_password);
-        signInButton = findViewById(R.id.button_signIn);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        signInButton = findViewById(R.id.signInButton);
         progressDialog = new ProgressDialog(this);// progress dialog
         progressDialog.setMessage("Signing in occuring ...");
         progressDialog.setCancelable(false);
@@ -55,25 +75,66 @@ public class SignIn extends AppCompatActivity {
                 String password = passwordEditText.getText().toString().trim();
 
                 if (!email.isEmpty() && !password.isEmpty()) {
-                    new SignInTask().execute(email, password);
+                   signIn();
                 } else {
                     Toast.makeText(SignIn.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        setupSharedPrefs();
+
     }
 
-    private void setupSharedPrefs() {
+    private void signIn() {
+        queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:80/signin.php?username=" + emailEditText.getText().toString()+"&password="+passwordEditText.getText().toString();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    username = jsonObject.getString("username");
+                    setupSharedPrefs(username);
+
+                } catch (JSONException exception) {
+                    Log.d("Error", exception.toString());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(SignIn.this, error.toString(),
+                        Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
+            }
+        });
+
+        queue.add(request);
+
+    }
+
+    private void setupSharedPrefs(String email) {
         prefs= PreferenceManager.getDefaultSharedPreferences(this);
         editor = prefs.edit();
         editor.putString("USERNAME",
-                "alice_jones");
+                email);
 
         editor.putBoolean("TOKEN", false);
         editor.commit();
         Intent intent = new Intent(this,MainActivityForUser.class);
         startActivity(intent);
+    }
+    private void setupSharedPrefsForAdmin() {
+        prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        editor = prefs.edit();
+        editor.putString("ADMIN",
+                "admin");
+
+        editor.putBoolean("TOKEN", true);
+        editor.commit();
+       // Intent intent = new Intent(this,MainActivityForUser.class);
+       // startActivity(intent);
     }
 
     @Override
@@ -83,72 +144,6 @@ public class SignIn extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
-    private class SignInTask extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
-            String email = params[0];
-            String password = params[1];
-            String response = "";
-
-            try {
-                URL url = new URL("http://xampp/htdocs/signin.php");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
-
-                String postData = "email=" + email + "&password=" + password;
-                OutputStream os = conn.getOutputStream();
-                os.write(postData.getBytes());
-                os.flush();
-                os.close();
-
-                int responseCode = conn.getResponseCode();
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String line;
-                    StringBuilder sb = new StringBuilder();
-
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    response = sb.toString();
-                    in.close();
-                } else {
-                    response = "Error occuer: " + responseCode;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            try {
-                JSONObject obj = new JSONObject(result);
-                boolean success = obj.getBoolean("success");
-
-                if (success==false) {
-                    String message = obj.getString("message");
-                    Toast.makeText(SignIn.this, message, Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Intent intent = new Intent(SignIn.this, MainActivityForUser.class);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(SignIn.this, "Sign in done successfully", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(SignIn.this, "Error parsing the json file", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }
 

@@ -58,6 +58,7 @@ public static String username;
 private TextView totalcostTV;
 EditText visaIDinput;
     private RequestQueue queue;
+    private RequestQueue queue2;
     float currentBalance;
     float carPrice;
     @Override
@@ -70,6 +71,8 @@ EditText visaIDinput;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        queue = Volley.newRequestQueue(this);
+        queue2 = Volley.newRequestQueue(this);
         visaIDinput=findViewById(R.id.visaIDinput);
         totalcostTV=findViewById(R.id.totalcostTV);
         prefs= PreferenceManager.getDefaultSharedPreferences(this);
@@ -77,7 +80,13 @@ EditText visaIDinput;
         backArrow=findViewById(R.id.backArrow);
         carPrice=Float.parseFloat(getIntent().getStringExtra("PRICE"));
         totalcostTV.setText("Total Price: "+carPrice);
-
+        String[] startdateformat = getIntent().getStringExtra("STARTDATE").split("-");
+        String[] enddateformat = getIntent().getStringExtra("ENDDATE").split("-");
+        int total= Integer.parseInt(enddateformat[0])-Integer.parseInt(startdateformat[0]);
+        total+=(Integer.parseInt(enddateformat[1])-Integer.parseInt(startdateformat[1]))*30;
+        total+=(Integer.parseInt(enddateformat[2])-Integer.parseInt(startdateformat[2]))*365;
+         carPrice*=total;
+        totalcostTV.setText("Total Price: "+carPrice);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,11 +97,11 @@ EditText visaIDinput;
         });
     }
 
-    public void confirmPaymentClick(View view) {
-        if (ValidatePayment()) {
+    public void confirmPaymentClick() {
 
 
-            queue = Volley.newRequestQueue(this);
+
+
             String url = "http://10.0.2.2:80/rest/makereservation.php";
 
 
@@ -149,26 +158,30 @@ EditText visaIDinput;
 
             Intent intent = new Intent(this, MainActivityForUser.class);
             startActivity(intent);
-        }else {
-            Dialog dialog=new Dialog(this);
-            dialog.setContentView(R.layout.not_enough_balance_activity);
 
-            dialog.show();
-        }
     }
 
-        private boolean ValidatePayment () {
+        public void ValidatePayment (View view) {
 
 
-            queue = Volley.newRequestQueue(this);
-            String url = "http://10.0.2.2:80/rest/fetchbalance.php?username=" + username;
+
+            String url = "http://10.0.2.2:80/rest/fetchbalance.php?username=" + username+"&visaid="+visaIDinput.getText().toString();
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
                     null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
                         currentBalance = Float.parseFloat(jsonObject.getString("balance"));
+                        if (carPrice <= currentBalance) {
+                            confirmPaymentClick();
+                        } else {
 
+                            Dialog dialog=new Dialog(PaymentDetails.this);
+                            dialog.setContentView(R.layout.not_enough_balance_activity);
+
+                            dialog.show();
+
+                        }
                     } catch (JSONException exception) {
                         Log.d("Error", exception.toString());
                     }
@@ -185,11 +198,7 @@ EditText visaIDinput;
             });
 
             queue.add(request);
-            if (carPrice <= currentBalance) {
-                return true;
-            } else {
-                return false;
-            }
+
 
         }
 

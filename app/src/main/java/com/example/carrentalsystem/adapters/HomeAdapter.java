@@ -82,41 +82,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         //mercedes
         //hyundai
         //volkd
-        if (itemList.get(position).getCarName().equalsIgnoreCase("bmw"))
-        holder.card_iv.setImageResource(R.drawable.bmw);
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("volkswagen")){
-            holder.card_iv.setImageResource(R.drawable.volkswagen);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("toyota")){
-            holder.card_iv.setImageResource(R.drawable.toyota);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("Honda")){
-            holder.card_iv.setImageResource(R.drawable.honda);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("Ford")){
-            holder.card_iv.setImageResource(R.drawable.ford);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("Cheverolet")){
-            holder.card_iv.setImageResource(R.drawable.cheverolet);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("Nisan")){
-            holder.card_iv.setImageResource(R.drawable.nisan);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("Audi")){
-            holder.card_iv.setImageResource(R.drawable.audi);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("mercedes")){
-            holder.card_iv.setImageResource(R.drawable.mer);
-        }
-        else if (itemList.get(position).getCarName().equalsIgnoreCase("hyundai")){
-            holder.card_iv.setImageResource(R.drawable.hyundai);
-        }
-        else {
-            holder.card_iv.setImageResource(R.drawable.mer);
-        }
+
+            holder.card_iv.setImageResource(getCarImageResource(itemList.get(position).getCarName()));
+
 
     }
 
+    private int getCarImageResource(String carName) {
+        // Convert car name to lowercase and remove spaces
+        String resourceName = carName.toLowerCase().replace(" ", "");
+        // Get resource ID dynamically
+        int resId = context.getResources().getIdentifier(resourceName, "drawable", context.getPackageName());
+        // Return the resource ID if found, otherwise return a default image resource ID
+        return resId != 0 ? resId : R.drawable.mer;
+    }
 
 
     @Override
@@ -132,6 +111,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         private ImageView card_iv;
         private TextView carid;
         private String color;
+        ImageView fav_deal;
 
         private TextView model;
 
@@ -143,6 +123,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             card_iv=itemView.findViewById(R.id.card_iv);
             carid=itemView.findViewById(R.id.carid);
             model=itemView.findViewById(R.id.carmodel);
+            fav_deal=itemView.findViewById(R.id.fav_deal);
 
             itemView.setOnClickListener( new View.OnClickListener(){
 
@@ -159,8 +140,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     brandInput.setText(carName.getText().toString()+"/"+model.getText().toString());
                     TextView seatsInput = dialog.findViewById(R.id.seatsInput);
                     seatsInput.setText(seatsInput.getText().toString());
-                    TextView text3 = dialog.findViewById(R.id.text3);
-                    text3.setText(text3.getText().toString());
+
                     Button colorinput=dialog.findViewById(R.id.colorinput);
                     colorinput.setBackgroundColor(Color.parseColor(color));
 
@@ -169,7 +149,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     button.setOnClickListener(e -> {
                         Intent intent = new Intent(context, ReservationDetials.class);
                         intent.putExtra("CARID",carid.getText());
-
+                        fav_deal.setImageResource(R.drawable.fullfav);
                         context.startActivity(intent);
                         dialog.dismiss();
                     });

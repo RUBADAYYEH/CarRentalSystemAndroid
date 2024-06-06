@@ -17,9 +17,7 @@
 
         <ImageView
             android:id="@+id/backArrow"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:clickable="true"
+            style="@style/backImageView"
             android:src="@drawable/leftarrow" />
 
         <ImageView
@@ -31,32 +29,27 @@
 
         <TextView
             android:id="@+id/reservationinfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            style="@style/PlainBlackTextViewHeader"
             android:text="BMW/2022 Blue Ramallah"
-            android:textSize="25dp" />
+            />
 
         <TextView
             android:id="@+id/totalprice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Total Price:"
-            android:textSize="25dp" />
+            style="@style/ItalicBlackTextViewHeader2"
+
+            android:text="@string/total_price"
+             />
 
         <TextView
             android:id="@+id/availableFromDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="select your start date"
-            android:textSize="18dp" />
+           style="@style/ItalicBlackTextViewHeader2"
+            android:text="@string/select_your_start_date"
+            />
         <TextView
             android:id="@+id/enddate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="select your end date"
-            android:textSize="18dp" />
+            style="@style/ItalicBlackTextViewHeader2"
+            android:text="@string/select_your_end_date"
+             />
 
         <CalendarView
             android:id="@+id/calendarView"

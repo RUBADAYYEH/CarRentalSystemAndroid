@@ -26,26 +26,14 @@
 
             <ImageView
                 android:id="@+id/profileImage"
-                android:src="@drawable/profileicon"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="299dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-
+                style="@style/CustomProfileImageStyle"
                 />
 
 
             <TextView
                 android:id="@+id/usernameTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="28dp"
+               style="@style/PlainBlackTextViewHeader"
                 android:text="Hi User"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="32dp"
                 android:layout_alignParentStart="true"
@@ -53,13 +41,12 @@
                 android:layout_marginEnd="32dp"
                 />
         </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:clickable="true"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/searchOnLocation"
+                android:background="@android:color/transparent"
+              style="@style/smallHomeText"
                 android:onClick="searchOnLocation"
-                android:text=" Search location instead? "/>
+                android:text="@string/search_location_instead"/>
 
             <LinearLayout
                 android:id="@+id/linear"
@@ -110,23 +97,16 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/seveanseatsicon"
-                        android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        style="@style/HomeSearchIconStyle"
                         android:src="@drawable/sevenpasscar"
-                        android:scaleType="centerCrop"/>
+                        />
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/smallHomeText"
                         android:layout_below="@+id/seveanseatsicon"
                         android:text="7 Seat"
                         android:layout_alignStart="@+id/seveanseatsicon"
                         android:layout_alignEnd="@+id/seveanseatsicon"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:maxLines="1"
-                        android:textStyle="bold"
-                        android:textSize="17sp"
+
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -139,23 +119,15 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/fourseatsicon"
-                        android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        style="@style/HomeSearchIconStyle"
                         android:src="@drawable/fourseats"
-                        android:scaleType="centerCrop"/>
+                       />
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/smallHomeText"
                         android:layout_below="@+id/fourseatsicon"
                         android:text="5 Seat"
                         android:layout_alignStart="@+id/fourseatsicon"
                         android:layout_alignEnd="@+id/fourseatsicon"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:maxLines="1"
-                        android:textStyle="bold"
-                        android:textSize="17sp"
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -168,23 +140,15 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/twoseatsicon"
-                        android:layout_width="80dp"
-                        android:layout_height="60dp"
+                        style="@style/HomeSearchIconStyle"
                         android:src="@drawable/twoseatscar"
-                        android:scaleType="centerCrop"/>
+                        />
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/smallHomeText"
                         android:layout_below="@+id/twoseatsicon"
                         android:text="2 Seat"
                         android:layout_alignStart="@+id/twoseatsicon"
                         android:layout_alignEnd="@+id/twoseatsicon"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:maxLines="1"
-                        android:textStyle="bold"
-                        android:textSize="17sp"
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -273,15 +237,11 @@
                 />
 
             <TextView
+                style="@style/PlainBlackTextViewHeader"
                 android:id="@+id/topDealsText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Top Deals"
                 android:layout_below="@+id/linear_categories"
-                android:textStyle="bold"
-                android:textSize="28dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"/>
+                />
 
 
             <androidx.recyclerview.widget.RecyclerView

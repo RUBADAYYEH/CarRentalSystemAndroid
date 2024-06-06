@@ -1,5 +1,6 @@
 package com.example.carrentalsystem.ui.home;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -17,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +39,7 @@ import com.example.carrentalsystem.CarDetailsActivity;
 import com.example.carrentalsystem.MainActivityForUser;
 import com.example.carrentalsystem.R;
 import com.example.carrentalsystem.adapters.HomeAdapter;
-import com.example.carrentalsystem.location.LocationActivity;
+
 import com.example.carrentalsystem.model.Item;
 
 import org.json.JSONArray;
@@ -51,7 +58,10 @@ public class HomeFragment extends Fragment {
     private HomeAdapter adapter;
     private HomeAdapter adapter1;
     private List<Item> itemList;
+    private List<Item> topDealList;
+   public  List<String> locations;
     private RecyclerView searchcarsRV;
+    ListView locationsLstView;
     private TextView searchresultTV;
     private SearchView searchView;
     public static  String username;
@@ -66,6 +76,7 @@ public class HomeFragment extends Fragment {
     LinearLayout filterlayout;
     public int seatsNumberLayoutClicked;
 
+AppCompatButton searchOnLocation;
 
     private RequestQueue queue;
 
@@ -85,6 +96,45 @@ public class HomeFragment extends Fragment {
         prefs= PreferenceManager.getDefaultSharedPreferences(getContext());
         username=prefs.getString("USERNAME","user");
         usernameTV.setText("Hi "+ username);
+        searchOnLocation=view.findViewById(R.id.searchOnLocation);
+        searchOnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog=new Dialog(view.getContext());
+                dialog.setContentView(R.layout.activity_location);
+                // Convert dp to pixels
+                int width = (int) (400 * view.getContext().getResources().getDisplayMetrics().density);
+                int height = (int) (300 * view.getContext().getResources().getDisplayMetrics().density);
+
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.width = width;
+                layoutParams.height = height;
+                dialog.getWindow().setAttributes(layoutParams);
+
+
+                 locationsLstView=dialog.findViewById(R.id.locationsLstView);
+                getDistinctChapterLocations();
+                locationsLstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // Get the item that was clicked
+                        String selectedItem = (String) parent.getItemAtPosition(position);
+                        searchOnLocation(selectedItem);
+                        dialog.dismiss();
+
+
+                        Toast.makeText(getContext(), "Clicked: " + selectedItem, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
+
+                dialog.show();
+            }
+        });
 
         filterlayout=view.findViewById(R.id.filterlayout);
          sevenseatslayout=view.findViewById(R.id.sevenseatslayout);
@@ -199,8 +249,7 @@ public class HomeFragment extends Fragment {
                 adapter1=new HomeAdapter(getContext(),
                         itemList
                 );
-                topDealRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                topDealRV.setAdapter(adapter);
+
                 searchcarsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 searchcarsRV.setAdapter(adapter1);
 
@@ -216,7 +265,7 @@ public class HomeFragment extends Fragment {
         });
 
         queue.add(request);
-
+        populateTopDeals();
        /* itemList=new ArrayList<>();
         Item item1 = new Item("Ramallah","Marcedes","100");
 
@@ -226,6 +275,85 @@ public class HomeFragment extends Fragment {
         adapter=new HomeAdapter(getContext(),itemList);
         topDealRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         topDealRV.setAdapter(adapter);*/
+    }
+    private void populateTopDeals() {
+        String url = "http://10.0.2.2:80/rest/fetchTopDeals.php";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                topDealList = new ArrayList<>();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        topDealList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("price"),obj.getString("carid"),obj.getString("color"),obj.getString("model"),obj.getString("seatsnumber")));
+                    }catch(JSONException exception){
+                        Log.d("Error", exception.toString());
+                    }
+                }
+
+                adapter=new HomeAdapter(getContext(),
+                        topDealList
+                );
+                topDealRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                topDealRV.setAdapter(adapter);
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), error.toString(),
+                        Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
+            }
+        });
+
+        queue.add(request);
+    }
+
+    private void searchOnLocation(String location) {
+        String url = "http://10.0.2.2:80/rest/fetchbylocation.php?chapterlocation="+location;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                itemList = new ArrayList<>();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        itemList.add( new Item(obj.getString("chapterlocation"),obj.getString("brand"),obj.getString("price"),obj.getString("carid"),obj.getString("color"),obj.getString("model"),obj.getString("seatsnumber")));
+                    }catch(JSONException exception){
+                        Log.d("Error", exception.toString());
+                    }
+                }
+
+                adapter1=new HomeAdapter(getContext(),
+                        itemList
+                );
+
+                searchcarsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                searchcarsRV.setAdapter(adapter1);
+                searchcarsRV.setVisibility(View.VISIBLE);
+                searchresultTV.setVisibility(View.VISIBLE);
+                filterlayout.setVisibility(View.VISIBLE);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), error.toString(),
+                        Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
+            }
+        });
+
+        queue.add(request);
     }
 
     private void filterBasedOnPrice(int i) {
@@ -242,7 +370,10 @@ public class HomeFragment extends Fragment {
     }
 
     private  void filterList(String text) {
-        adapter1.setFilteredList(itemList);
+
+            adapter1.setFilteredList(itemList);
+
+
         List<Item> filteredList=new ArrayList<>();
         if (text.contains(",")) {
             String[] search = text.split(",");
@@ -418,8 +549,43 @@ public class HomeFragment extends Fragment {
 
 
 
-    public void searchOnLocation(View view) {
-        Intent intent=new Intent(getContext(), LocationActivity.class);
-        startActivity(intent);
+    private void getDistinctChapterLocations() {
+        locations = new ArrayList<>();
+        String url = "http://10.0.2.2:80/rest/conn.php";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                locations = new ArrayList<>();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        if (!locations.contains(obj.getString("chapterlocation"))){
+
+                        locations.add(obj.getString("chapterlocation"));}
+                    }catch(JSONException exception){
+                        Log.d("Error", exception.toString());
+                    }
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, locations);
+                locationsLstView.setAdapter(adapter);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), error.toString(),
+                        Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
+            }
+        });
+
+        queue.add(request);
+
     }
+
+
+
 }

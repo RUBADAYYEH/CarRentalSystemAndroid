@@ -59,4 +59,16 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="brand_model">Brand/Model</string>
+    <string name="color">color:</string>
+    <string name="total_cost">Total Cost :</string>
+    <string name="enter_your_visa_id">Enter your Visa ID</string>
+    <string name="total_price">Total Price:</string>
+    <string name="select_your_start_date">select your start date</string>
+    <string name="select_your_end_date">select your end date</string>
+    <string name="my_reservations">My Reservations</string>
+    <string name="search_location_instead">Search location instead?</string>
+    <string name="balance">Balance</string>
+    <string name="booking">Booking</string>
+    <string name="please_check_your_balance">Please check your balance</string>
 </resources>
