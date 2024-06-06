@@ -145,5 +145,9 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
+    public void goToSignUp(View view) {
+        Intent intent = new Intent(this,SignOut.class);
+        startActivity(intent);
+    }
 }
 

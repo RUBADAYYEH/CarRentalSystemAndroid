@@ -24,9 +24,7 @@
 
 
 
-        <activity
-            android:name=".SignUp"
-            android:exported="false" />
+
         <activity
             android:name=".reservationform.PaymentDetails"
             android:exported="false">
